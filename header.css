@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+}
+
+.header .icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.header .header-left .icon,
+.header .header-right .icon {
+    margin-right: 20px;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background: #333;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-responsive {
+    transform: translateX(0);
+}
+
+.sidebar .sidebar-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    font-size: 20px;
+}
+
+.sidebar .sidebar-title .close_icon {
+    cursor: pointer;
+}
+
+.sidebar .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .sidebar-list-item {
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.sidebar .sidebar-list-item a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .sidebar-list-item a .icon {
+    margin-right: 10px;
+}
+
+.main-container {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.main-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-cards {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 20%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_icon {
+    font-size: 24px;
+}
+
+.charts {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    height: 500px;
+}

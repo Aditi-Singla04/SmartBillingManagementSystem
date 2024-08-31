@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up Form</title>
+<link rel="stylesheet" type="text/css" href="signUp.css">
+</head>
+<body>
+
+<div class="container">
+    <form id="Sign Up">
+        <h1>Sign Up</h1>
+        <div class="inputBox">
+            <input type="text" id="FirstName" required>
+            <label>F i r s t N a m e</label>
+        </div>
+
+        <div class="inputBox">
+            <input type="text" id="LastName" required>
+            <label>L a s t N a m e</label>
+        </div>
+
+        <div class="inputBox">
+            <input type="tel" id="PhoneNumber" required>
+            <label>P h o n e N u m b e r</label>
+        </div>
+
+        <div class="inputBox">
+            <input type="text" id="DateOfBirth" required>
+            <label>D a t e O f B i r t h</label>
+        </div>
+        
+        <div class="inputBox">
+            <input type="email" id="EmailId" required>
+            <label>E m a i l I d</label>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" id="Password" required>
+            <label>P a s s w o r d</label>
+        </div>
+
+        <div class="inputBox">
+            <input type="password" id="ConfirmPassword" required>
+            <label>C o n f i r m   P a s s w o r d</label>
+        </div>
+        
+        
+        <div class="inputBox">
+            <a href="main.html"><button type="button">Create Account</button>
+        </div>
+    </form>
+</div>
+
+<script>
+
+
+    document.querySelectorAll('label').forEach(label => {
+    label.innerHTML = label.innerText.split('').map((letter, i) => {
+        return `<span style="transition-delay: ${i * 50}ms">${letter}</span>`;
+    }).join('');
+});
+
+document.getElementById('signUp').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var FirstName = document.getElementById('FirstName').value;
+    var LastName = document.getElementById('LastName').value;
+    var PhoneNumber = document.getElementById('PhoneNumber').value;
+    var EmailId = document.getElementById('EmailId').value;
+    var Password = document.getElementById('Password').value;
+    var ConfirmPassword = document.getElementById('ConfirmPassword').value;
+    var DateOfBirth = document.getElementById('DateOfBirth').value;
+
+   
+    console.log("First Name: " + FirstName);
+    console.log("Last Name: " + LastName);
+    console.log("Phone Number: " + PhoneNumber);
+    console.log("EmailId: " + EmailId);
+    console.log("Password: " + Password);
+    console.log("ConfirmPassword: " + ConfirmPassword);
+    console.log("DateOfBirth: " + DateOfBirth);
+
+    alert('Account Created!');
+});
+
+</script>
+</body>
+</html>

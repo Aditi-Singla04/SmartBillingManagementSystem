@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #f4f4f4;
+            position: fixed;
+            left: -250px;
+            transition: left 0.3s ease-in-out;
+        }
+        .sidebar-responsive {
+            left: 0;
+        }
+        .sidebar-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+        }
+        .sidebar-title .sidebar-brand {
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-title .icon_header {
+            margin-right: 10px;
+        }
+        .close_icon {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-list-item {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .sidebar-list-item a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-list-item a .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<aside id="sidebar" class="sidebar">
+    <div class="sidebar-title">
+        <div class="sidebar-brand">
+            <i class="fas fa-shopping-cart icon_header"></i> SHOP
+        </div>
+        <span class="icon close_icon" id="closeSidebar">X</span>
+    </div>
+
+    <ul class="sidebar-list">
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-th-large icon"></i> Dashboard
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-box-open icon"></i> Products
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-th icon"></i> Categories
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-users icon"></i> Customers
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-clipboard-list icon"></i> Inventory
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-chart-bar icon"></i> Reports
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#">
+                <i class="fas fa-cogs icon"></i> Settings
+            </a>
+        </li>
+    </ul>
+</aside>
+
+<script>
+    document.getElementById('closeSidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('sidebar-responsive');
+    });
+
+    function openSidebar() {
+        document.getElementById('sidebar').classList.toggle('sidebar-responsive');
+    }
+</script>
+
+</body>
+</html>

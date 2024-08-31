@@ -1,0 +1,315 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .invoice-modal .modal-dialog {
+      max-width: 800px;
+    }
+    .btn-primary {
+      margin-top: 1rem;
+    }
+    .bg-light {
+      background-color: #f8f9fa !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <form id="invoiceForm">
+      <div class="row">
+        <div class="col-md-8 col-lg-9">
+          <div class="card p-4 p-xl-5 my-3 my-xl-4">
+            <div class="d-flex flex-row align-items-start justify-content-between mb-3">
+              <div class="d-flex flex-column">
+                <div class="d-flex flex-column">
+                  <div class="mb-2">
+                    <span class="fw-bold">Current&nbsp;Date:&nbsp;</span>
+                    <span class="current-date" id="currentDate"></span>
+                  </div>
+                </div>
+                <div class="d-flex flex-row align-items-center">
+                  <span class="fw-bold d-block me-2">Due&nbsp;Date:</span>
+                  <input type="date" id="dateOfIssue" name="dateOfIssue" class="form-control" style="max-width: 150px;" required>
+                </div>
+              </div>
+              <div class="d-flex flex-row align-items-center">
+                <span class="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
+                <input type="number" id="invoiceNumber" name="invoiceNumber" class="form-control" min="1" style="max-width: 70px;" required>
+              </div>
+            </div>
+            <hr class="my-4">
+            <div class="row mb-5">
+              <div class="col">
+                <label for="billFrom" class="fw-bold">Bill from:</label>
+                <input type="text" id="billFrom" name="billFrom" class="form-control my-2" placeholder="Who is this invoice from?" required>
+                <input type="email" id="billFromEmail" name="billFromEmail" class="form-control my-2" placeholder="Email address" required>
+                <input type="text" id="billFromAddress" name="billFromAddress" class="form-control my-2" placeholder="Billing address" required>
+              </div>
+              <div class="col">
+                <label for="billTo" class="fw-bold">Bill to:</label>
+                <input type="text" id="billTo" name="billTo" class="form-control my-2" placeholder="Who is this invoice to?" required>
+                <input type="email" id="billToEmail" name="billToEmail" class="form-control my-2" placeholder="Email address" required>
+                <input type="text" id="billToAddress" name="billToAddress" class="form-control my-2" placeholder="Billing address" required>
+              </div>
+            </div>
+            <div id="invoiceItems">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ITEM</th>
+                    <th>QTY</th>
+                    <th>PRICE/RATE</th>
+                    <th class="text-center">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="invoiceItemsBody">
+                  <tr>
+                    <td style="width: 100%;">
+                      <div class="input-group my-1 flex-nowrap">
+                        <input type="text" name="name" class="form-control" placeholder="Item name" required>
+                      </div>
+                      <div class="input-group my-1 flex-nowrap">
+                        <input type="text" name="description" class="form-control" placeholder="Item description" required>
+                      </div>
+                    </td>
+                    <td style="min-width: 70px;">
+                      <input type="number" name="quantity" class="form-control" min="1" step="1" value="1" required>
+                    </td>
+                    <td style="min-width: 130px;">
+                      <div class="input-group my-1 flex-nowrap">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" name="price" class="form-control text-end" min="1" step="0.01" value="1.00" required>
+                      </div>
+                    </td>
+                    <td class="text-center" style="min-width: 50px;">
+                      <button type="button" class="btn btn-danger btn-sm delete-item"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-primary add-item">Add Item</button>
+            </div>
+            <div class="row mt-4 justify-content-end">
+              <div class="col-lg-6">
+                <div class="d-flex flex-row align-items-start justify-content-between">
+                  <span class="fw-bold">Subtotal:</span>
+                  <span id="subTotal">$0.00</span>
+                </div>
+                <div class="d-flex flex-row align-items-start justify-content-between mt-2">
+                  <span class="fw-bold">Discount:</span>
+                  <span>
+                    <span class="small ">(<span id="discountRate">0</span>%)</span>
+                    $<span id="discountAmount">0.00</span>
+                  </span>
+                </div>
+                <div class="d-flex flex-row align-items-start justify-content-between mt-2">
+                  <span class="fw-bold">Tax:</span>
+                  <span>
+                    <span class="small ">(<span id="taxRate">0</span>%)</span>
+                    $<span id="taxAmount">0.00</span>
+                  </span>
+                </div>
+                <hr>
+                <div class="d-flex flex-row align-items-start justify-content-between" style="font-size: 1.125rem;">
+                  <span class="fw-bold">Total:</span>
+                  <span class="fw-bold" id="total">$0.00</span>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4">
+            <label for="notes" class="fw-bold">Notes:</label>
+            <textarea id="notes" name="notes" class="form-control my-2" rows="3" placeholder="Thank you for doing business with us. Have a great day!"></textarea>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-3">
+          <div class="sticky-top pt-md-3 pt-xl-4">
+            <div class="form-group mb-3">
+              <label for="currency" class="fw-bold">Currency:</label>
+              <select id="currency" class="form-control btn btn-light my-1" aria-label="Change Currency">
+                <option value="$">USD (United States Dollar)</option>
+                <option value="£">GBP (British Pound Sterling)</option>
+                <option value="₹">INR (Indian Rupee)</option>
+                <option value="¥">JPY (Japanese Yen)</option>
+                <option value="$">CAD (Canadian Dollar)</option>
+                <option value="$">AUD (Australian Dollar)</option>
+                <option value="$">SGD (Singapore Dollar)</option>
+                <option value="¥">CNY (Chinese Renminbi)</option>
+                <option value="₿">BTC (Bitcoin)</option>
+              </select>
+            </div>
+            <div class="form-group my-3">
+              <label for="taxRate" class="fw-bold">Tax rate:</label>
+              <div class="input-group my-1 flex-nowrap">
+                <input type="number" id="taxRateInput" name="taxRate" class="form-control" placeholder="0.0" min="0.00" step="0.01" max="100.00">
+                <div class="input-group-append">
+                  <span class="input-group-text">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group my-3">
+              <label for="discountRate" class="fw-bold">Discount rate:</label>
+              <div class="input-group my-1 flex-nowrap">
+                <input type="number" id="discountRateInput" name="discountRate" class="form-control" placeholder="0.0" min="0.00" step="0.01" max="100.00">
+                <div class="input-group-append">
+                  <span class="input-group-text">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              
+              <button type="button" id="saveInvoice" class="btn btn-success my-1">Save Invoice</button>
+              <!-- <button type="button" class="btn btn-danger my-1">Delete</button> -->
+              <a href="main.html"><button type="button" class="btn btn-primary my-1">Home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const { jsPDF } = window.jspdf;
+
+      const currentDateElement = document.getElementById('currentDate');
+      const date = new Date();
+      currentDateElement.textContent = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+
+      const invoiceForm = document.getElementById('invoiceForm');
+      const invoiceItemsBody = document.getElementById('invoiceItemsBody');
+      const addItemButton = document.querySelector('.add-item');
+      const saveInvoiceButton = document.getElementById('saveInvoice');
+
+      addItemButton.addEventListener('click', function() {
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td style="width: 100%;">
+            <div class="input-group my-1 flex-nowrap">
+              <input type="text" name="name" class="form-control" placeholder="Item name" required>
+            </div>
+            <div class="input-group my-1 flex-nowrap">
+              <input type="text" name="description" class="form-control" placeholder="Item description" required>
+            </div>
+          </td>
+          <td style="min-width: 70px;">
+            <input type="number" name="quantity" class="form-control" min="1" step="1" value="1" required>
+          </td>
+          <td style="min-width: 130px;">
+            <div class="input-group my-1 flex-nowrap">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="number" name="price" class="form-control text-end" min="1" step="0.01" value="1.00" required>
+            </div>
+          </td>
+          <td class="text-center" style="min-width: 50px;">
+            <button type="button" class="btn btn-danger btn-sm delete-item"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        `;
+        invoiceItemsBody.appendChild(newRow);
+        newRow.querySelector('.delete-item').addEventListener('click', function() {
+          newRow.remove();
+          calculateTotals();
+        });
+        newRow.querySelectorAll('input').forEach(input => input.addEventListener('input', calculateTotals));
+      });
+
+      invoiceItemsBody.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-item')) {
+          event.target.closest('tr').remove();
+          calculateTotals();
+        }
+      });
+
+      document.getElementById('taxRateInput').addEventListener('input', calculateTotals);
+      document.getElementById('discountRateInput').addEventListener('input', calculateTotals);
+
+      function calculateTotals() {
+        let subTotal = 0;
+        document.querySelectorAll('#invoiceItemsBody tr').forEach(row => {
+          const quantity = parseFloat(row.querySelector('input[name="quantity"]').value);
+          const price = parseFloat(row.querySelector('input[name="price"]').value);
+          subTotal += quantity * price;
+        });
+
+        const discountRate = parseFloat(document.getElementById('discountRateInput').value) || 0;
+        const taxRate = parseFloat(document.getElementById('taxRateInput').value) || 0;
+
+        const discountAmount = subTotal * (discountRate / 100);
+        const taxAmount = (subTotal - discountAmount) * (taxRate / 100);
+        const total = subTotal - discountAmount + taxAmount;
+
+        document.getElementById('subTotal').textContent = `$${subTotal.toFixed(2)}`;
+        document.getElementById('discountRate').textContent = discountRate.toFixed(2);
+        document.getElementById('discountAmount').textContent = discountAmount.toFixed(2);
+        document.getElementById('taxRate').textContent = taxRate.toFixed(2);
+        document.getElementById('taxAmount').textContent = taxAmount.toFixed(2);
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+      }
+
+      function generatePDF() {
+        const doc = new jsPDF();
+
+        // Title and Date
+        doc.setFontSize(18);
+        doc.text("Invoice", 105, 20, null, null, 'center');
+        doc.setFontSize(12);
+        doc.text(`Date: ${currentDateElement.textContent}`, 105, 30, null, null, 'center');
+        
+        // Bill From and Bill To
+        doc.setFontSize(10);
+        doc.text(`Bill From:\n${document.getElementById('billFrom').value}\n${document.getElementById('billFromEmail').value}\n${document.getElementById('billFromAddress').value}`, 20, 40);
+        doc.text(`Bill To:\n${document.getElementById('billTo').value}\n${document.getElementById('billToEmail').value}\n${document.getElementById('billToAddress').value}`, 120, 40);
+        
+        // Invoice Items
+        doc.autoTable({
+          startY: 80,
+          head: [['Item', 'Description', 'Quantity', 'Price']],
+          body: Array.from(document.querySelectorAll('#invoiceItemsBody tr')).map(row => [
+            row.querySelector('input[name="name"]').value,
+            row.querySelector('input[name="description"]').value,
+            row.querySelector('input[name="quantity"]').value,
+            `$${parseFloat(row.querySelector('input[name="price"]').value).toFixed(2)}`
+          ]),
+          theme: 'striped',
+          headStyles: { fillColor: [22, 160, 133] }
+        });
+
+        // Totals
+        const finalY = doc.lastAutoTable.finalY + 10;
+        doc.text(`Subtotal: $${parseFloat(document.getElementById('subTotal').textContent.substring(1)).toFixed(2)}`, 105, finalY, null, null, 'right');
+        doc.text(`Discount: $${parseFloat(document.getElementById('discountAmount').textContent).toFixed(2)} (${document.getElementById('discountRate').textContent}%)`, 105, finalY + 10, null, null, 'right');
+        doc.text(`Tax: $${parseFloat(document.getElementById('taxAmount').textContent).toFixed(2)} (${document.getElementById('taxRate').textContent}%)`, 105, finalY + 20, null, null, 'right');
+        doc.text(`Total: $${parseFloat(document.getElementById('total').textContent.substring(1)).toFixed(2)}`, 105, finalY + 30, null, null, 'right');
+
+        // Notes
+        doc.text(`Notes:\n${document.getElementById('notes').value}`, 20, finalY + 40);
+
+        // Save PDF
+        doc.save(`Invoice_${document.getElementById('invoiceNumber').value}.pdf`);
+      }
+
+      saveInvoiceButton.addEventListener('click', generatePDF);
+
+      calculateTotals();
+    });
+  </script>
+</body>
+</html>
+
+
+
